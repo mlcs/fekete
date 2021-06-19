@@ -1,0 +1,20 @@
+# project
+_site
+.sass-cache
+.vagrant
+
+# general
+.DS_Store
+Thumbs.db
+ehthumbs.db
+
+# VIM
+*.swp
+
+# Libre Office
+.~lock.*
+
+# python3
+__pycache__
+
+
