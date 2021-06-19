@@ -13,3 +13,12 @@ resulting in potentially unwanted effects.
 Bendito, E., Carmona, A., Encinas, A. M., & Gesto, J. M. Estimation of
 Fekete points (2007), _J Comp. Phys._ **225**, pp 2354--2376  
 [https://doi.org/10.1016/j.jcp.2007.03.017](https://doi.org/10.1016/j.jcp.2007.03.017)
+
+
+## TODO
+
+- [x] First working implementation
+- [ ] Optimize code for faster performance
+- [ ] Plotting routine for spherical Voronoi tesselation
+- [ ] Test script
+- [ ] Examples
