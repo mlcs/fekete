@@ -17,4 +17,6 @@ ehthumbs.db
 # python3
 __pycache__
 
+# kernprof i.e. line profile files
+*.lprof
 

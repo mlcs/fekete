@@ -1,6 +1,6 @@
 #! /usr/bin/env python3
 """
-fekete -   Estimation of Fekete points on a unit sphere
+fekete -  Estimation of Fekete points on a unit sphere
 
           This module implements the core algorithm put forward in [1],
           allowing users to estimate the locations of N equidistant points on a
@@ -32,66 +32,12 @@ fekete -   Estimation of Fekete points on a unit sphere
 import numpy as np
 from scipy.spatial.distance import pdist
 from tqdm import tqdm
+from numba import jit
 
 G = 6.67408 * 1E-11         # m^3 / kg / s^2
 
 
-def advance_direction(X):
-    def disequilibrium_i(X, i):
-        xi = X[i]
-        Fi_tot = total_force_i(X, i)
-        xi_n = xi / np.sqrt((xi ** 2).sum())
-        Fi_n = (Fi_tot * xi_n).sum() * xi_n
-        Fi_T = Fi_tot - Fi_n
-        wi = Fi_T / np.sqrt((Fi_tot ** 2).sum())
-        return wi
-
-    def total_force_i(X, i):
-        xi= X[i]
-        xi_arr = xi.repeat(X.shape[0]).reshape(xi.shape[0], X.shape[0]).T
-        diff = xi_arr - X
-        j = diff.sum(axis=1) != 0.
-        denom = (np.sqrt((diff[j] ** 2).sum(axis=1))) ** 3
-        numer = (G * diff)
-        Fi_tot = np.nansum((numer[j].T / denom).T, axis=0)
-        return Fi_tot
-
-
-    w = np.zeros(X.shape)
-    for i in range(len(X)):
-        w[i] = disequilibrium_i(X, i)
-    return w
-
-
-def total_potential_energy(X):
-    def total_potential_energy_i(X, i):
-        xi= X[i]
-        Vi_tot = 0.
-        for j in range(len(X)):
-            if j != i:
-                Vi_tot += potential_ij(xi, X[j])
-        return Vi_tot
-
-    def potential_ij(xi, xj):
-        return - G /mod(xi - xj)
-
-    V_tot = 0.
-    for i in range(len(X)):
-        V_tot += total_potential_energy_i(X, i)
-
-    return V_tot
-
-
-def points_on_sphere(N, r=1.):
-    phi = np.arccos(1. - 2. * np.random.rand(N))
-    theta = 2. * np.pi * np.random.rand(N)
-    x = r * np.sin(phi) * np.cos(theta)
-    y = r * np. sin(phi) * np.sin(theta)
-    z = r * np.cos(phi)
-    return np.c_[x, y, z]
-
-
-def fekete_benedito(N=100, a=1., X=None, maxiter=100, tol=1E-20, neq=100):
+def bendito(N=100, a=1., X=None, maxiter=100, tol=1E-20, neq=100):
     err = [1E-1]
     k = 0
     if len(X) == 0:
@@ -100,11 +46,16 @@ def fekete_benedito(N=100, a=1., X=None, maxiter=100, tol=1E-20, neq=100):
     else:
         N = X.shape[0]
     equilibriated = False
-    pbar = tqdm(total=maxiter)
+    pbar = tqdm(total=maxiter,
+                bar_format='{desc:<5.5}{percentage:3.0f}%|{bar:30}{r_bar}'
+                )
+    w = np.zeros(X.shape)
     while (not equilibriated) and (k < maxiter):
         # Core algorithm steps from Bendito et al. (2007)
         ## 1.a. Advance direction
-        w = advance_direction(X)
+        # w = advance_direction(X)
+        for i in range(len(X)):
+            w[i] = disequilibrium_i(X, i)
         # 1.b. Error as max_i |w_i|
         mod_w = np.sqrt((w ** 2).sum(axis=1))
         err.append(np.max(mod_w))
@@ -126,4 +77,33 @@ def fekete_benedito(N=100, a=1., X=None, maxiter=100, tol=1E-20, neq=100):
         pbar.update(1)
     pbar.close()
     return X_new, err
+
+
+@jit(nopython=True)
+def disequilibrium_i(X, i):
+    xi = X[i]
+    # total force at i
+    xi_arr = xi.repeat(X.shape[0]).reshape(xi.shape[0], X.shape[0]).T
+    diff = xi_arr - X
+    j = np.where(np.sum(diff, axis=1) != 0)[0]
+    diff_j = diff[j]
+    denom = (np.sqrt(np.square(diff_j).sum(axis=1))) ** 3
+    numer = (G * diff_j)
+    Fi_tot = np.sum((numer.T / denom).T, axis=0)    # gives 3D net force vector
+    # disequilibrium
+    xi_n = xi / np.sqrt(np.square(xi).sum())
+    Fi_n = (Fi_tot * xi_n).sum() * xi_n
+    Fi_T = Fi_tot - Fi_n
+    wi = Fi_T / np.sqrt(np.square(Fi_tot).sum())
+    return wi
+
+
+def points_on_sphere(N, r=1.):
+    phi = np.arccos(1. - 2. * np.random.rand(N))
+    theta = 2. * np.pi * np.random.rand(N)
+    x = r * np.sin(phi) * np.cos(theta)
+    y = r * np. sin(phi) * np.sin(theta)
+    z = r * np.cos(phi)
+    return np.c_[x, y, z]
+
 

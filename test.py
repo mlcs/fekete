@@ -31,28 +31,42 @@ def plot_voronoi_3d(X, ax):
                marker=".", color="indianred", depthshade=True, s=40)
     return None
 
-X = fekete.points_on_sphere(N=100)
-Xeq, E = fekete.fekete_benedito(X=X, maxiter=1000)
+def plot(X, Xeq, E):
+    """plots the final results
+    """
+    fig1 = pl.figure(figsize=[10., 6.])
+    ax11 = fig1.add_axes([0.01, 0.01, 0.50, 0.90], projection='3d')
+    ax12 = fig1.add_axes([0.45, 0.01, 0.50, 0.90], projection='3d')
+    plot_voronoi_3d(X, ax11)
+    plot_voronoi_3d(Xeq, ax12)
+    for ax in fig1.axes:
+        ax.grid(False)
+        ax.set_axis_off()
+    pl.savefig("fekete_sphereplots.png")
 
-fig1 = pl.figure(figsize=[10., 6.])
-ax11 = fig1.add_axes([0.01, 0.01, 0.50, 0.90], projection='3d')
-ax12 = fig1.add_axes([0.45, 0.01, 0.50, 0.90], projection='3d')
-plot_voronoi_3d(X, ax11)
-plot_voronoi_3d(Xeq, ax12)
-for ax in fig1.axes:
-    ax.grid(False)
-    ax.set_axis_off()
-pl.show()
+    E = E[1:]
+    fig2 = pl.figure(figsize=[12., 6])
+    ax21 = fig2.add_subplot(1, 2, 1)
+    ax21.plot(E, c="steelblue")
+    ax21.plot(uniform_filter1d(E, size=10), c="indianred", ls="--")
+    ax22 = fig2.add_subplot(1, 2, 2)
+    ax22.plot(np.abs(np.diff(E)), c="steelblue")
+    for ax in fig2.axes:
+        ax.set_yscale("log")
+    pl.savefig("fekete_error.png")
 
-E = E[1:]
-fig2 = pl.figure(figsize=[12., 6])
-ax21 = fig2.add_subplot(1, 2, 1)
-ax21.plot(E, c="steelblue")
-ax21.plot(uniform_filter1d(E, size=10), c="indianred", ls="--")
-ax22 = fig2.add_subplot(1, 2, 2)
-ax22.plot(np.abs(np.diff(E)), c="steelblue")
-for ax in fig2.axes:
-    ax.set_yscale("log")
-pl.show()
+    return None
+
+
+def main():
+    """Runs the main part of the analysis"""
+    X = fekete.points_on_sphere(N=1000)
+    Xeq, E = fekete.bendito(X=X, maxiter=10000)
+    plot(X, Xeq, E)
+    return None
+
+
+if __name__ == "__main__":
+    main()
 
 
