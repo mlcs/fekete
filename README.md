@@ -8,7 +8,7 @@ where the commonly used Gaussian (rectilinear, latitude-longitude) grid
 leads to an increasingly high density of points towards the poles,
 resulting in potentially unwanted effects.
 
-![fekete-100-iterations](examples/fekete.gif)
+![fekete-100-iterations](/examples/fekete.gif)
 
 ## References
 
