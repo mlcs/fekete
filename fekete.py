@@ -57,15 +57,13 @@ def bendito(N=100, a=1., X=None, maxiter=100, tol=1E-20):
     else:
         N = X.shape[0]
     equilibriated = False
-    pbar = tqdm(total=maxiter,
-                bar_format='{desc:<5.5}{percentage:3.0f}%|{bar:30}{r_bar}'
-                )
+    # save to disk
+    np.savetxt("./movie/data/X00000.csv", X, delimiter=",")
     w = np.zeros(X.shape)
-    # while (not equilibriated) and (k < maxiter):
-    for i in tqdm(range(maxiter)):
+    pb_fmt = '{desc:<5.5}{percentage:3.0f}%|{bar:30}{r_bar}'
+    for k in tqdm(range(maxiter), bar_format=pb_fmt):
         # Core algorithm steps from Bendito et al. (2007)
         ## 1.a. Advance direction
-        # w = advance_direction(X)
         for i in range(len(X)):
             w[i] = disequilibrium_i(X, i)
         # 1.b. Error as max_i |w_i|
@@ -78,16 +76,8 @@ def bendito(N=100, a=1., X=None, maxiter=100, tol=1E-20):
         ## 3. New configuration
         X_new = (Xhat.T / np.sqrt((Xhat ** 2).sum(axis=1))).T
         X = X_new
-        # # check if algorithm has converged
-        # if k > (10 * neq):
-        #     # running mean for the last neq time steps
-        #     nfilt = int(neq / 10)
-        #     del_err_avg = np.convolve(err[-neq:], np.ones((nfilt,))/nfilt)[(nfilt-1):]
-        #     if np.all(del_err_avg < tol) * np.all(del_err_avg > (tol / 10.)):
-        #         equilibriated = True
-    #     k += 1
-    #     pbar.update(1)
-    # pbar.close()
+        # save to disk
+        np.savetxt("./movie/data/X%05d.csv" % (k + 1), X, delimiter=",")
     return X_new, err
 
 
