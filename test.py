@@ -61,7 +61,7 @@ def plot(X, Xeq, E):
 def main():
     """Runs the main part of the analysis"""
     X = fekete.points_on_sphere(N=1000)
-    Xeq, E = fekete.bendito(X=X, maxiter=10000)
+    Xeq, E = fekete.bendito(X=X, maxiter=1000)
     plot(X, Xeq, E)
     return None
 

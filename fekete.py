@@ -37,7 +37,18 @@ from numba import jit
 G = 6.67408 * 1E-11         # m^3 / kg / s^2
 
 
-def bendito(N=100, a=1., X=None, maxiter=100, tol=1E-20, neq=100):
+def bendito(N=100, a=1., X=None, maxiter=100, tol=1E-20):
+    """
+    Return the Fekete points according to the Bendito et al. (2007) algorithm.
+
+    Parameters
+    ----------
+
+
+    Returns
+    -------
+
+    """
     err = [1E-1]
     k = 0
     if len(X) == 0:
@@ -50,7 +61,8 @@ def bendito(N=100, a=1., X=None, maxiter=100, tol=1E-20, neq=100):
                 bar_format='{desc:<5.5}{percentage:3.0f}%|{bar:30}{r_bar}'
                 )
     w = np.zeros(X.shape)
-    while (not equilibriated) and (k < maxiter):
+    # while (not equilibriated) and (k < maxiter):
+    for i in tqdm(range(maxiter)):
         # Core algorithm steps from Bendito et al. (2007)
         ## 1.a. Advance direction
         # w = advance_direction(X)
@@ -66,16 +78,16 @@ def bendito(N=100, a=1., X=None, maxiter=100, tol=1E-20, neq=100):
         ## 3. New configuration
         X_new = (Xhat.T / np.sqrt((Xhat ** 2).sum(axis=1))).T
         X = X_new
-        # check if algorithm has converged
-        if k > (10 * neq):
-            # running mean for the last neq time steps
-            nfilt = int(neq / 10)
-            del_err_avg = np.convolve(err[-neq:], np.ones((nfilt,))/nfilt)[(nfilt-1):]
-            if np.all(del_err_avg < tol) * np.all(del_err_avg > (tol / 10.)):
-                equilibriated = True
-        k += 1
-        pbar.update(1)
-    pbar.close()
+        # # check if algorithm has converged
+        # if k > (10 * neq):
+        #     # running mean for the last neq time steps
+        #     nfilt = int(neq / 10)
+        #     del_err_avg = np.convolve(err[-neq:], np.ones((nfilt,))/nfilt)[(nfilt-1):]
+        #     if np.all(del_err_avg < tol) * np.all(del_err_avg > (tol / 10.)):
+        #         equilibriated = True
+    #     k += 1
+    #     pbar.update(1)
+    # pbar.close()
     return X_new, err
 
 
