@@ -53,10 +53,11 @@ forces (tangential, normal, and total) accordingly.
     Cartesian coordinates before using the implementation.
 
 +   **Plotting results**: The module has a helper function
-    `fekete.plot_spherical_voronoi()` that estimates a [spherical
-    Voronoi tessellation](https://www.jasondavies.com/maps/voronoi/)
-    using the corresponding function in
-    (scipy.spatial)[https://docs.scipy.org/doc/scipy/reference/generated/scipy.spatial.SphericalVoronoi.html#scipy.spatial.SphericalVoronoi]. 
+    [`fekete.plot_spherical_voronoi()`](https://github.com/mlcs/fekete/blob/19f02d5136307d51ac3c73c8e709b4ff9f514064/fekete.py#L226)
+    that estimates a [spherical Voronoi
+    tessellation](https://www.jasondavies.com/maps/voronoi/) using the
+    corresponding function in
+    [scipy.spatial](https://docs.scipy.org/doc/scipy/reference/generated/scipy.spatial.SphericalVoronoi.html#scipy.spatial.SphericalVoronoi). 
 
 +   **Example**: A simple example with `N=1000` and a total of 10000
     iterations is given in [`example.py`](/example.py).
@@ -75,7 +76,7 @@ Fekete points (2007), _J Comp. Phys._ **225**, pp 2354--2376
 - [x] Documentation
 - [x] Plotting routine for spherical Voronoi tesselation
 - [x] Examples
-- [ ] Improve README (installation, license, usage, etc.)
+- [x] Improve README (installation, license, usage, etc.)
 
 ## License
 
