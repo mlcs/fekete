@@ -57,8 +57,6 @@ def bendito(N=100, a=1., X=None, maxiter=100, tol=1E-20):
     else:
         N = X.shape[0]
     equilibriated = False
-    # save to disk
-    np.savetxt("./movie/data/X00000.csv", X, delimiter=",")
     w = np.zeros(X.shape)
     pb_fmt = '{desc:<5.5}{percentage:3.0f}%|{bar:30}{r_bar}'
     for k in tqdm(range(maxiter), bar_format=pb_fmt):
@@ -76,8 +74,6 @@ def bendito(N=100, a=1., X=None, maxiter=100, tol=1E-20):
         ## 3. New configuration
         X_new = (Xhat.T / np.sqrt((Xhat ** 2).sum(axis=1))).T
         X = X_new
-        # save to disk
-        np.savetxt("./movie/data/X%05d.csv" % (k + 1), X, delimiter=",")
     return X_new, err
 
 
