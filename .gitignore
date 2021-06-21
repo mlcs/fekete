@@ -20,3 +20,6 @@ __pycache__
 # kernprof i.e. line profile files
 *.lprof
 
+# ipython checkpoints
+.ipynb_checkpoints/
+
