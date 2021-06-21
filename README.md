@@ -36,16 +36,16 @@ forces (tangential, normal, and total) accordingly.
     fekete`.
 
 +   **Prerequisite Python packages**:
-        - `numpy`
-        - `matplotlib`
-        - `numba` (for speed up)
+    - `numpy`
+    - `matplotlib`
+    - `numba` (for speed up)
 
 +   **Usage**: Call `fekete.bendito()` with the appropriate arguments: 
-        - Either specify number of points _N_ you want to be distributed
-          evenly on the sphere, or 
-        - provide an initial configuration _X_ of points that need to
-          nudged towards equilibrium. In both cases, the results should
-          be the same
+    - Either specify number of points _N_ you want to be distributed
+      evenly on the sphere, or 
+    - provide an initial configuration _X_ of points that need to
+      nudged towards equilibrium. In both cases, the results should
+      be the same
 
 +   **Coordinates**: The implementation uses Cartesian coordinates, but
     if you have your data in spherical coordinates you can use the
