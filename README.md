@@ -49,8 +49,9 @@ forces (tangential, normal, and total) accordingly.
 
 +   **Coordinates**: The implementation uses Cartesian coordinates, but
     if you have your data in spherical coordinates you can use the
-    `fekete.spherical_to_cartesian()` function to convert the points to
-    Cartesian coordinates before using the implementation.
+    [`fekete.spherical_to_cartesian()`](https://github.com/mlcs/fekete/blob/3205c742e13cb4115e14a53b05efe1cc2f90b36a/fekete.py#L226)
+    function to convert the points to Cartesian coordinates before using
+    the implementation.
 
 +   **Plotting results**: The module has a helper function
     [`fekete.plot_spherical_voronoi()`](https://github.com/mlcs/fekete/blob/19f02d5136307d51ac3c73c8e709b4ff9f514064/fekete.py#L226)
@@ -60,7 +61,8 @@ forces (tangential, normal, and total) accordingly.
     [scipy.spatial](https://docs.scipy.org/doc/scipy/reference/generated/scipy.spatial.SphericalVoronoi.html#scipy.spatial.SphericalVoronoi). 
 
 +   **Example**: A simple example with `N=1000` and a total of 10000
-    iterations is given in [`example.py`](/example.py).
+    iterations is given in [`example.py`](/example.py). It takes around
+    350 secs on a Intel® Core™ i9-9880H CPU @ 2.30GHz.
 
 ## References
 
