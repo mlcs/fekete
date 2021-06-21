@@ -8,7 +8,7 @@ where the commonly used Gaussian (rectilinear, latitude-longitude) grid
 leads to an increasingly high density of points towards the poles,
 resulting in potentially unwanted effects.
 
-![fekete-100-iterations](/examples/fekete.gif)
+![fekete-100-iterations](/fekete.gif)
 
 ## References
 
@@ -22,5 +22,5 @@ Fekete points (2007), _J Comp. Phys._ **225**, pp 2354--2376
 - [x] First working implementation
 - [x] Optimize code for faster performance
 - [x] Documentation
-- [ ] Plotting routine for spherical Voronoi tesselation
+- [x] Plotting routine for spherical Voronoi tesselation
 - [ ] Examples
