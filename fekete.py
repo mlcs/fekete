@@ -249,3 +249,43 @@ def spherical_to_cartesian(theta, phi, r=1.):
     X = np.c_[x, y, z]
 
     return X
+
+
+def plot_spherical_voronoi(X, ax):
+    """
+    Plot scipy.spatial.SphericalVoronoi output on the surface of a unit sphere.
+
+    Parameters
+    ----------
+    X : numpy.ndarray, with shape (N, 3)
+        Locations of the `N` points on the surface of the sphere of radius `r`.
+        The i-th row in `X` is a 3D vector that gives the location of the i-th
+        point in `(x, y, z)` coordinates.
+    ax : matplotlib.pyplot.Axes
+        Axis in which the Voronoi tessellation output is to be plotted.
+
+    Returns
+    -------
+    ax : matplotlib.pyplot.Axes
+        The same axis object used for plotting is returned.
+
+    """
+    vor = SphericalVoronoi(X)
+    vor.sort_vertices_of_regions()
+    verts = vor.vertices
+    regs = vor.regions
+    for i in range(X.shape[0]):
+        verts_reg = np.array([verts[k] for k in regs[i]])
+        verts_reg = [list(zip(verts_reg[:, 0], verts_reg[:, 1], verts_reg[:, 2]))]
+        ax.add_collection3d(Poly3DCollection(verts_reg,
+                                             facecolors="w",
+                                             edgecolors="steelblue"
+                                             ),
+                            )
+    ax.set_xlim(-1.1, 1.1)
+    ax.set_ylim(-1.1, 1.1)
+    ax.set_zlim(-1.1, 1.1)
+    ax.scatter(X[:, 0], X[:, 1], X[:, 2],
+               marker=".", color="indianred", depthshade=True, s=40)
+    return ax
+
