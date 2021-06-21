@@ -21,6 +21,6 @@ Fekete points (2007), _J Comp. Phys._ **225**, pp 2354--2376
 
 - [x] First working implementation
 - [x] Optimize code for faster performance
-- [ ] Documentation
+- [x] Documentation
 - [ ] Plotting routine for spherical Voronoi tesselation
 - [ ] Examples
