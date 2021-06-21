@@ -33,11 +33,13 @@ import numpy as np
 from scipy.spatial.distance import pdist
 from tqdm import tqdm
 from numba import jit
+from scipy.spatial import SphericalVoronoi
+from mpl_toolkits.mplot3d.art3d import Poly3DCollection
 
 G = 6.67408 * 1E-11         # m^3 / kg / s^2
 
 
-def bendito(N=100, a=1., X=None, maxiter=1000):
+def bendito(N=100, a=1., X=None, maxiter=1000, verbose=True):
     """
     Return the Fekete points according to the Bendito et al. (2007) algorithm.
 
@@ -85,10 +87,15 @@ def bendito(N=100, a=1., X=None, maxiter=1000):
         N = X.shape[0]
 
     # core loop
+    ## intializ parameters
     dq = []
     w = np.zeros(X.shape)
-    pb_fmt = '{desc:<5.5}{percentage:3.0f}%|{bar:30}{r_bar}'
-    for k in tqdm(range(maxiter), bar_format=pb_fmt):
+    ## set up progress bar
+    pb_fmt = "{desc:<5.5}{percentage:3.0f}%|{bar:30}{r_bar}"
+    pb_desc = "Estimating Fekete points ..."
+    ## iterate
+    for k in tqdm(range(maxiter), bar_format=pb_fmt, desc=pb_desc,
+                  disable=not verbose):
 
         # Core steps from Bendito et al. (2007), pg 6 bottom
         ## 1.a. Advance direction
@@ -282,9 +289,9 @@ def plot_spherical_voronoi(X, ax):
                                              edgecolors="steelblue"
                                              ),
                             )
-    ax.set_xlim(-1.1, 1.1)
-    ax.set_ylim(-1.1, 1.1)
-    ax.set_zlim(-1.1, 1.1)
+    ax.set_xlim(-1.01, 1.01)
+    ax.set_ylim(-1.01, 1.01)
+    ax.set_zlim(-1.01, 1.01)
     ax.scatter(X[:, 0], X[:, 1], X[:, 2],
                marker=".", color="indianred", depthshade=True, s=40)
     return ax
