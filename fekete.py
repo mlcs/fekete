@@ -64,6 +64,8 @@ def bendito(N=100, a=1., X=None, maxiter=1000, verbose=True):
         implemented. Users are advised to check until the regime of exponential
         decreased is reach by trying out different high values of `maxiter`.
         Default is 1000.
+    verbose : bool
+        Show progress bar. Default is `True`.
 
     Returns
     -------
