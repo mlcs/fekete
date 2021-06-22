@@ -28,7 +28,7 @@ potential defined by the interaction of the particles, so e simply
 assume a gravitational potential between the particles and work out the
 forces (tangential, normal, and total) accordingly. 
 
-## Notes on installation & usage
+## Installation & usage
 
 +   **Installation:** The algorithm is implemented as a Python module
     with the idea that    you can simply download
@@ -42,7 +42,8 @@ forces (tangential, normal, and total) accordingly.
     - `numba` (for speed up)
     - `tqdm` (progress bar display)
 
-+   **Usage**: Call `fekete.bendito()` with the appropriate arguments: 
++   **Usage**: Call
+    [`fekete.bendito()`](https://github.com/mlcs/fekete/blob/421796cb23da0022cc28871696bd3b55ff52b77c/fekete.py#L42) with the appropriate arguments: 
     - Either specify number of points _N_ you want to be distributed
       evenly on the sphere, or 
     - Provide an initial configuration _X_ of points that need to
