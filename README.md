@@ -85,7 +85,7 @@ Fekete points (2007), _J Comp. Phys._ **225**, pp 2354--2376
 
 ## License
 
-[![License: LGPL v3](https://img.shields.io/badge/License-LGPL%20v3-blue.svg?style=flat-square)](https://tldrlegal.com/license/gnu-lesser-general-public-license-v3-(lgpl-3))
+[![License: LGPL v3](https://img.shields.io/badge/License-LGPL%20v3-blue.svg?style=flat-square)](/LICENSE)
 
 - Copyright © [Bedartha Goswami](https://machineclimate.de/people/goswami/).
 
