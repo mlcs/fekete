@@ -32,7 +32,7 @@ forces (tangential, normal, and total) accordingly.
 
 +   **Installation:** The algorithm is implemented as a Python module
     with the idea that    you can simply download
-    [`fekete.py`](https://github.com/mlcs/fekete/blob/3ec66b9d053a1a45000f0ec872a93313ef7b8e68/fekete.py#L42)
+    [`fekete.py`](https://github.com/mlcs/fekete/blob/62778f464e608f001b1bf76c15769f8848ebf2aa/fekete.py)
     in your project directory and import is a Python module with `import
     fekete`.
 
