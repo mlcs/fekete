@@ -38,8 +38,9 @@ forces (tangential, normal, and total) accordingly.
 
 +   **Prerequisite Python packages**:
     - `numpy`
-    - `matplotlib`
+    - `matplotlib` (spherical Voronoi plotting helper function)
     - `numba` (for speed up)
+    - `tqdm` (progress bar display)
 
 +   **Usage**: Call `fekete.bendito()` with the appropriate arguments: 
     - Either specify number of points _N_ you want to be distributed
